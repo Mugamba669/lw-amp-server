@@ -3,23 +3,19 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:lw_server/helpers/Global.dart';
-// import '__init__.dart';
-
-int i = 0;
 
 class UDPServer {
   RawDatagramSocket? datagram;
-  int port;
-  UDPServer(this.datagram, this.port);
+
+  UDPServer(this.datagram);
 
   Future<UDPServer> bind() async {
-    final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, PORT,
-        reusePort: false);
-    return UDPServer(socket, port);
+    final socket = await RawDatagramSocket.bind(HOST, PORT, reusePort: true);
+    return UDPServer(socket);
   }
 
   Future<int> send(String message) async {
-    return datagram!.send(ascii.encode(message), HOST, port);
+    return datagram!.send(ascii.encode(message), HOST, PORT);
   }
 
   void receive() async {
@@ -37,27 +33,30 @@ class UDPServer {
   }
 }
 
-class UDPServerImplementation {
+/// UDP-Server
+class Server {
   static UDPServer? client;
-
+//**Checks if the server is connected */
   static bool isConnected() {
     if (client != null) return true;
     return false;
   }
 
-  static void connectToServer() async {
-    // client = await UDPServer.bind();
+  /// Allows connection to be established
+  static void connectServer() async {
+    await client!.bind();
   }
 
-  static Future<int> send() async {
+  /// Performs the send of data to the client
+  static Future<int> send(message) async {
     if (client!.datagram != null) {
-      return client!.datagram!
-          .send(ascii.encode("message"), InternetAddress.anyIPv4, client!.port);
+      return client!.datagram!.send(ascii.encode(message), HOST, PORT);
     }
     return 0;
   }
 
-  static closeConnection() {
+  /// Closes the server connection
+  static close() {
     client!.datagram!.close();
   }
 }

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class Server {
+class Client {
   Socket? server;
   int port;
-  Server(this.port);
+  Client(this.port);
 
   ///***Establishing the binding between the client and servers */
   Future<void> bindPort(BuildContext context) async {

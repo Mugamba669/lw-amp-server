@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lw_server/helpers/Global.dart';
 import 'package:lw_server/screens/Home.dart';
+import 'package:lw_server/screens/ServerPage.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -20,7 +21,10 @@ class _SplashState extends State<Splash> {
     Timer(
       const Duration(seconds: 6),
       () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Home(), fullscreenDialog: true),
+        MaterialPageRoute(
+          builder: (context) => const ServerPage(),
+          fullscreenDialog: true,
+        ),
       ),
     );
   }
@@ -29,7 +33,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: const Color.fromARGB(255, 8, 81, 216),
       body: Align(
         alignment: Alignment.center,
         child: Padding(
